@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<form id="form">
+			<input type="text" name="username" />
+			<input type="password" name="password" />
+			<input type="submit" value="提交" />
+		</form>
+		<script src="/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$('#form').on('submit', function() {
+				serializeObject($('#form'));
+				return false;
+			});
+			
+			function serializeObject (Obj) {
+				var result = {};
+				var params = Obj.serializeArray();
+				$.each(params,function(index, value) {
+					result[value.name] = value.value;
+				});
+				return result;
+			}
+		</script>
+	</body>
+</html>

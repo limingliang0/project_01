@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>document</title>
+		<script src="/js/template-web.js"></script>
+	</head>
+	<body>
+		<div id="index">
+			
+		</div>
+		<!-- 创建模板 -->
+		<script type="text/html" id="tpl">
+			<h1>{{username}} {{age}}</h1>
+		</script>
+		<script type="text/javascript">
+			var html = template('tpl',{username: 'zhangsan', age: 30});
+			document.getElementById('index').innerHTML = html;
+		</script>
+		
+	</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="/assets/bootstrap/dist/css/bootstrap.min.css">
+		<style type="text/css">
+			.container {
+				padding-top: 60px;
+			}
+
+			.padding {
+				padding: 5px 0 20px 0;
+			}
+
+			.box {}
+		</style>
+
+	</head>
+	<body>
+		<div class="box">
+			<div class="form-group">
+				<label>请选择文件</label>
+				<input type="file" name="" id="file" value="" />
+			</div>
+			<div id="bx" class="padding">
+
+			</div>
+			<div class="progress">
+				<div class="progress-bar" style="width: 0%;" id="bar">0%</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var file = document.getElementById('file');
+
+			var bar = document.getElementById('bar');
+
+			var bx = document.getElementById('bx');
+
+			file.onchange = function() {
+				var formData = new FormData();
+				//将用户选择的二进制文件追加到表单中
+				formData.append('attrName', this.files[0]);
+				var xhr = new XMLHttpRequest();
+				xhr.open('post', 'http://localhost:3000/upload');
+				//进度条设置
+				xhr.upload.onprogress = function(ev) {
+					var result = (ev.loaded / ev.total) * 100 + '%';
+					bar.style.width = result;
+					bar.innerHTML = result;
+				}
+
+				xhr.send(formData);
+
+				xhr.onload = function() {
+					if (xhr.status == 200) {
+						console.log(xhr.responseText)
+						var result = JSON.parse(xhr.responseText);
+						console.log(result)
+						var img = document.createElement('img');
+
+						img.src = result.path;
+						img.onload = function() {
+							bx.appendChild(img);
+						}
+					}
+				}
+			}
+		</script>
+	</body>
+</html>
